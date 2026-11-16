@@ -17,6 +17,7 @@ export function SignatureDialog({ pdf, pageNumber, targets, onApprove, onClose }
   const [crop, setCrop] = useState<number[] | null>(null);
   const [threshold, setThreshold] = useState(180);
   const [camera, setCamera] = useState(false);
+  const [drawing, setDrawing] = useState(false);
   const [cameraReady, setCameraReady] = useState(false);
   const [cameraStarting, setCameraStarting] = useState(false);
   const [error, setError] = useState("");
@@ -28,6 +29,8 @@ export function SignatureDialog({ pdf, pageNumber, targets, onApprove, onClose }
   const videoRef = useRef<HTMLVideoElement>(null);
   const uploadRef = useRef<HTMLInputElement>(null);
   const cropCanvas = useRef<HTMLCanvasElement>(null);
+  const drawCanvas = useRef<HTMLCanvasElement>(null);
+  const drawingStroke = useRef(false);
   const streamRef = useRef<MediaStream | null>(null);
   const captureGeneration = useRef(0);
   const mounted = useRef(true);
@@ -176,9 +179,91 @@ export function SignatureDialog({ pdf, pageNumber, targets, onApprove, onClose }
             <div className="signature-paper"><Icon name="signature" size={76} /></div>
             <h4>Start with pen and paper</h4><p>Sign white paper with dark ink, then capture or upload a photo.</p>
           </div>}
-          {!source && !camera && <div className="signature-source-actions" data-compact={ready || undefined}>
+          {!source && !camera && !drawing && <div className="signature-source-actions" data-compact={ready || undefined}>
+            <button className="signature-source" onClick={() => { setError(""); setDrawing(true); }}><span className="signature-source-icon"><Icon name="signature" size={21} /></span><span><strong>Draw signature</strong><small>Sign with finger or pen</small></span><Icon name="chevronRight" size={15} /></button>
             <button className="signature-source" disabled={cameraStarting} onClick={() => void startCamera()}><span className="signature-source-icon"><Icon name="camera" size={21} /></span><span><strong>{cameraStarting ? "Opening camera..." : "Use camera"}</strong><small>Capture from paper</small></span><Icon name="chevronRight" size={15} /></button>
             <button className="signature-source" onClick={() => uploadRef.current?.click()}><span className="signature-source-icon"><Icon name="upload" size={21} /></span><span><strong>Upload photo</strong><small>PNG, JPG or WebP</small></span><Icon name="chevronRight" size={15} /></button>
+          </div>}
+          {drawing && <div className="signature-draw">
+            <p className="signature-hint">Draw your signature below using your finger or stylus.</p>
+            <canvas
+              ref={drawCanvas}
+              width={400}
+              height={160}
+              className="signature-draw-canvas"
+              aria-label="Draw signature pad"
+              style={{ touchAction: "none" }}
+              onPointerDown={event => {
+                if (event.button !== 0 && event.pointerType === "mouse") return;
+                const canvas = event.currentTarget;
+                const ctx = canvas.getContext("2d");
+                if (!ctx) return;
+                const rectBox = canvas.getBoundingClientRect();
+                const x = (event.clientX - rectBox.left) * (canvas.width / rectBox.width);
+                const y = (event.clientY - rectBox.top) * (canvas.height / rectBox.height);
+                drawingStroke.current = true;
+                canvas.setPointerCapture(event.pointerId);
+                ctx.strokeStyle = "#111827";
+                ctx.lineWidth = 3.2;
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+              }}
+              onPointerMove={event => {
+                if (!drawingStroke.current) return;
+                const canvas = event.currentTarget;
+                const ctx = canvas.getContext("2d");
+                if (!ctx) return;
+                const rectBox = canvas.getBoundingClientRect();
+                const x = (event.clientX - rectBox.left) * (canvas.width / rectBox.width);
+                const y = (event.clientY - rectBox.top) * (canvas.height / rectBox.height);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+              }}
+              onPointerUp={() => { drawingStroke.current = false; }}
+              onPointerCancel={() => { drawingStroke.current = false; }}
+            />
+            <div className="form-actions">
+              <button className="btn ghost" onClick={() => setDrawing(false)}>Cancel</button>
+              <button className="btn ghost" onClick={() => {
+                const canvas = drawCanvas.current;
+                canvas?.getContext("2d")?.clearRect(0, 0, canvas.width, canvas.height);
+              }}>Clear</button>
+              <button className="btn primary" onClick={() => {
+                const canvas = drawCanvas.current;
+                const ctx = canvas?.getContext("2d");
+                if (!canvas || !ctx) return;
+                const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                let minX = width, minY = height, maxX = -1, maxY = -1;
+                for (let y = 0; y < height; y++) {
+                  for (let x = 0; x < width; x++) {
+                    if (data[(y * width + x) * 4 + 3] > 8) {
+                      if (x < minX) minX = x;
+                      if (y < minY) minY = y;
+                      if (x > maxX) maxX = x;
+                      if (y > maxY) maxY = y;
+                    }
+                  }
+                }
+                if (maxX < minX || maxY < minY) {
+                  setError("Draw your signature before continuing.");
+                  return;
+                }
+                const pad = 6;
+                const sx = Math.max(0, minX - pad);
+                const sy = Math.max(0, minY - pad);
+                const sw = Math.min(width - sx, maxX - minX + 1 + pad * 2);
+                const sh = Math.min(height - sy, maxY - minY + 1 + pad * 2);
+                const trimmed = document.createElement("canvas");
+                trimmed.width = sw;
+                trimmed.height = sh;
+                trimmed.getContext("2d")!.drawImage(canvas, sx, sy, sw, sh, 0, 0, sw, sh);
+                setSignature({ url: trimmed.toDataURL("image/png"), width: sw, height: sh });
+                setDrawing(false);
+                setError("");
+              }}>Use drawing <Icon name="chevronRight" size={15} /></button>
+            </div>
           </div>}
           <input ref={uploadRef} className="signature-upload" aria-label="Upload signature photo" type="file" accept="image/png,image/jpeg,image/webp" onChange={event => { void upload(event.target.files?.[0]); event.target.value = ""; }} />
           {camera && <div className="signature-camera">

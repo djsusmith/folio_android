@@ -32,6 +32,7 @@ import { recognizeScannedPages } from "./pageOcr";
 import { scanLanguagesFrom } from "./scanLanguage";
 import { ImageMenu, ImageViewer, type ImageTarget } from "./ImageViewer";
 import { MoreMenu, type MoreItem } from "./MoreMenu";
+import { PdfToolsModal } from "./tools/PdfToolsModal";
 import { IS_MAC, keys } from "./platform";
 import { AiPanel, forgetClearedChats, type AiContext } from "./AiPanel";
 import { ZoomMenu } from "./ZoomMenu";
@@ -244,7 +245,7 @@ export default function App({ tabs, tabKey, upgradeNotes }: { tabs: DocumentTabs
   const [printCopy, setPrintCopy] = useState<{ pdf: PDFDocumentProxy; bytes: Uint8Array; page: number; name: string } | null>(null);
   const preparingPrint = useRef(false);
   useEffect(() => () => { if (printCopy) void printCopy.pdf.loadingTask.destroy(); }, [printCopy]);
-  const [dialog, setDialog] = useState<"info" | "shortcuts" | "about" | "url" | "settings" | "ai-settings" | "changelog" | "upgrade" | null>(
+  const [dialog, setDialog] = useState<"info" | "shortcuts" | "about" | "url" | "settings" | "ai-settings" | "changelog" | "upgrade" | "tools" | null>(
     upgradeNotes.length ? "upgrade" : null);
   // A pasted or dropped link waits in Open from URL, so the user sees where it goes before Folio contacts it.
   const [linkDraft, setLinkDraft] = useState("");
@@ -1483,6 +1484,7 @@ export default function App({ tabs, tabKey, upgradeNotes }: { tabs: DocumentTabs
                     { kind: "action", icon: "expand", label: "Focus mode", shortcut: "F", onSelect: toggleFocus },
                   ] as MoreItem[])
                 : []),
+              { kind: "action", icon: "edit", label: "PDF Tools", onSelect: () => setDialog("tools") },
               { kind: "action", icon: "settings", label: "Settings", shortcut: keys("Ctrl ,"), onSelect: () => setDialog("settings") },
               { kind: "action", icon: "keyboard", label: "Keyboard shortcuts", shortcut: "?", onSelect: () => setDialog("shortcuts") },
               { kind: "action", icon: "info", label: "About Folio", onSelect: () => setDialog("about") },
@@ -1716,7 +1718,7 @@ export default function App({ tabs, tabKey, upgradeNotes }: { tabs: DocumentTabs
         )}
       </div>
 
-      {!doc && <Welcome active={active} onPick={pickFile} onOpenUrl={() => openUrlDialog()} onOpenRecent={file => tabs.open([{ kind: "blob", name: file.name, blob: file.data, recentId: file.id }])}
+      {!doc && <Welcome active={active} onPick={pickFile} onOpenUrl={() => openUrlDialog()} onOpenTools={() => setDialog("tools")} onOpenRecent={file => tabs.open([{ kind: "blob", name: file.name, blob: file.data, recentId: file.id }])}
         onSample={() => tabs.open([{ kind: "sample", name: "Folio sample.pdf" }])} loading={loading} />}
 
       {loading && doc && <div className="loading-bar" />}
@@ -1762,6 +1764,21 @@ export default function App({ tabs, tabKey, upgradeNotes }: { tabs: DocumentTabs
       {dialog === "upgrade" && <ChangelogDialog upgradeNotes={upgradeNotes} onClose={() => setDialog(null)} />}
       {doc && imageView && <ImageViewer pdf={doc.pdf} target={imageView} onClose={() => setImageView(null)} />}
       {dialog === "url" && <OpenUrlDialog key={linkDraft} initial={linkDraft} onClose={() => setDialog(null)} onSubmit={(url) => { setDialog(null); tabs.open([{ kind: "url", name: new URL(url).hostname, url }]); }} />}
+      {dialog === "tools" && (
+        <PdfToolsModal
+          activeDoc={doc ? {
+            name: doc.name,
+            getBytes: async () => (await currentBytes(doc, organized))?.bytes ?? new Uint8Array(await doc.pdf.getData()),
+          } : null}
+          onOpenPdfBytes={(name, bytes) => tabs.open([{ kind: "bytes", name, data: bytes }])}
+          onExportFile={async (name, bytes, mimeType) => {
+            saveBlob(new Blob([bytes.slice()], { type: mimeType }), name);
+            flash(`Saved ${name}`);
+          }}
+          onStartSigning={doc ? startSigning : undefined}
+          onClose={() => setDialog(null)}
+        />
+      )}
       {doc && signing && <SignatureDialog key={doc.id + ":" + page} pdf={doc.pdf} pageNumber={page} targets={signatureTargets}
         onClose={() => setSigning(false)} onApprove={async (signature, rect) => {
           await placeSignature(viewerRef.current!, doc.pdf, page, signature, rect);
