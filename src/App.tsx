@@ -33,6 +33,7 @@ import { scanLanguagesFrom } from "./scanLanguage";
 import { ImageMenu, ImageViewer, type ImageTarget } from "./ImageViewer";
 import { MoreMenu, type MoreItem } from "./MoreMenu";
 import { PdfToolsModal } from "./tools/PdfToolsModal";
+import { isDesktopAiAvailable, isNativeAndroid, isOnDeviceAiEnabled, saveOrShareBytes } from "./mobile";
 import { IS_MAC, keys } from "./platform";
 import { AiPanel, forgetClearedChats, type AiContext } from "./AiPanel";
 import { ZoomMenu } from "./ZoomMenu";
@@ -139,6 +140,10 @@ interface Pending {
 const pdfBlob = (bytes: Uint8Array) => new Blob([bytes as Uint8Array<ArrayBuffer>], { type: "application/pdf" });
 
 function saveBlob(blob: Blob, name: string) {
+  if (isNativeAndroid()) {
+    void blob.arrayBuffer().then(buf => saveOrShareBytes(name, new Uint8Array(buf), blob.type || "application/octet-stream"));
+    return;
+  }
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -1460,7 +1465,9 @@ export default function App({ tabs, tabKey, upgradeNotes }: { tabs: DocumentTabs
         <div className="topbar-right">
           {doc && (
             <>
-              <IconButton icon="sparkle" label="Ask AI" active={aiOpen} onClick={() => { setHistoryOpen(false); setAiOpen(!aiOpen); }} />
+              {(isDesktopAiAvailable() || isOnDeviceAiEnabled()) && (
+                <IconButton icon="sparkle" label="Ask AI" active={aiOpen} onClick={() => { setHistoryOpen(false); setAiOpen(!aiOpen); }} />
+              )}
               <IconButton icon="search" label={keys("Search (Ctrl+F)")} active={searchOpen} onClick={() => (searchOpen ? closeSearch() : setSearchOpen(true))} />
             </>
           )}
