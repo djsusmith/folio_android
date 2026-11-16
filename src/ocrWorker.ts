@@ -4,8 +4,10 @@ export class MissingScanPack extends Error {}
 import type { Worker as OcrWorker } from "tesseract.js";
 
 /** Start Tesseract and own the browser worker even if initialization never resolves. */
+const BUNDLED_OCR_LANGUAGES = new Set<ScanLanguage>(["eng", "ben", "ara"]);
+
 export async function startOcrWorker(signal: AbortSignal, languages: ScanLanguage[] = ["eng"]): Promise<OcrWorker> {
-  if (languages.some(code => code !== "eng")) {
+  if (languages.some(code => !BUNDLED_OCR_LANGUAGES.has(code))) {
     const installed = await installedScanLanguages();
     signal.throwIfAborted();
     const missing = SCAN_LANGUAGES.find(({ id }) => languages.includes(id) && !installed.has(id));

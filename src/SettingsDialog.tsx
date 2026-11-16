@@ -9,6 +9,7 @@ import { ScanLanguagePicker } from "./ScanLanguagePicker";
 import type { ScanLanguage } from "./scanLanguage";
 import { Icon } from "./icons";
 import { clearStoredData, countStoredData, onStoredDataCleared, type StoredCategory } from "./recent";
+import { isOnDeviceAiEnabled, setOnDeviceAiEnabled } from "./mobile";
 
 /** One place for every Folio preference. */
 interface Props {
@@ -153,6 +154,7 @@ export function SettingsDialog({ initialSection = "General", theme, onTheme, nig
   const desktop = window.folioDesktop;
   const ai = desktop?.ai;
   const [error, setError] = useState<string | null>(null);
+  const [onDeviceAi, setOnDeviceAi] = useState(isOnDeviceAiEnabled);
   const [ocrCleared, setOcrCleared] = useState(false);
   const [section, setSection] = useState<"General" | "Ask AI" | "Storage">(initialSection);
 
@@ -216,6 +218,22 @@ export function SettingsDialog({ initialSection = "General", theme, onTheme, nig
           <Row label="Scan languages" hint="Download languages once to recognize scans offline.">
             <ScanLanguagePicker value={scanLanguages} onChange={onScanLanguages} />
           </Row>
+          {!ai && (
+            <Row
+              label="On-device AI (Experimental)"
+              hint="Optional local assistant toggle. Desktop cloud AI providers are disabled on Android for privacy and zero bloat."
+            >
+              <Switch
+                label="On-device AI"
+                checked={onDeviceAi}
+                onChange={(on) => {
+                  setOnDeviceAiEnabled(on);
+                  setOnDeviceAi(on);
+                  setError(null);
+                }}
+              />
+            </Row>
+          )}
         </Section>
 
         </>}

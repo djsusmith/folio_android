@@ -7,13 +7,17 @@ import { SCAN_LANGUAGES, type ScanLanguage } from "./scanLanguage";
 export const OCR_CACHE_PATH = catalog.baseUrl.slice(0, -1);
 const cacheKey = (code: ScanLanguage) => `${OCR_CACHE_PATH}/${code}.traineddata`;
 
+export const BUNDLED_SCAN_LANGUAGES = new Set<ScanLanguage>(["eng", "ben", "ara"]);
+
 export async function installedScanLanguages(): Promise<Set<ScanLanguage>> {
   const stored = new Set(await keys());
-  return new Set(SCAN_LANGUAGES.filter(({ id }) => id === "eng" || stored.has(cacheKey(id))).map(({ id }) => id));
+  return new Set(
+    SCAN_LANGUAGES.filter(({ id }) => BUNDLED_SCAN_LANGUAGES.has(id) || stored.has(cacheKey(id))).map(({ id }) => id),
+  );
 }
 
 export async function installScanLanguage(code: ScanLanguage, signal: AbortSignal) {
-  if (code === "eng") return;
+  if (BUNDLED_SCAN_LANGUAGES.has(code)) return;
   const install = async () => {
     if ((await installedScanLanguages()).has(code)) return;
     const name = catalog.languages[code].name;

@@ -13,9 +13,15 @@ for (const cpu of ["", "-simd", "-relaxedsimd"]) {
   const name = `tesseract-core${cpu}-lstm.wasm.js`;
   copy(`tesseract.js-core/${name}`, name);
 }
+const BUNDLED_OCR_LANGS = new Set(["eng", "ben", "ara"]);
+
 // Keep previously copied packs out of incremental builds. Other languages are installed on request.
 for (const name of readdirSync(dest)) {
-  if (name.endsWith(".traineddata.gz") && name !== "eng.traineddata.gz") unlinkSync(resolve(dest, name));
+  if (name.endsWith(".traineddata.gz") && !BUNDLED_OCR_LANGS.has(name.replace(".traineddata.gz", ""))) {
+    unlinkSync(resolve(dest, name));
+  }
 }
 copy("@tesseract.js-data/eng/4.0.0_best_int/eng.traineddata.gz", "eng.traineddata.gz");
+copy("@tesseract.js-data/ben/4.0.0_best_int/ben.traineddata.gz", "ben.traineddata.gz");
+copy("@tesseract.js-data/ara/4.0.0_best_int/ara.traineddata.gz", "ara.traineddata.gz");
 copy("tesseract.js-core/LICENSE", "LICENSE.txt");
