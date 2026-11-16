@@ -33,7 +33,7 @@ import { scanLanguagesFrom } from "./scanLanguage";
 import { ImageMenu, ImageViewer, type ImageTarget } from "./ImageViewer";
 import { MoreMenu, type MoreItem } from "./MoreMenu";
 import { PdfToolsModal } from "./tools/PdfToolsModal";
-import { isDesktopAiAvailable, isNativeAndroid, isOnDeviceAiEnabled, saveOrShareBytes } from "./mobile";
+import { isDesktopAiAvailable, isNativeAndroid, isOnDeviceAiEnabled, registerAndroidBackHandler, saveOrShareBytes } from "./mobile";
 import { IS_MAC, keys } from "./platform";
 import { AiPanel, forgetClearedChats, type AiContext } from "./AiPanel";
 import { ZoomMenu } from "./ZoomMenu";
@@ -150,6 +150,16 @@ function saveBlob(blob: Blob, name: string) {
   a.download = name;
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 10_000);
+}
+
+function AndroidBackBridge({ active, onBack }: { active: boolean; onBack: () => boolean }) {
+  const ref = useRef(onBack);
+  ref.current = onBack;
+  useEffect(() => {
+    if (!active) return;
+    return registerAndroidBackHandler(() => ref.current());
+  }, [active]);
+  return null;
 }
 
 export default function App({ tabs, tabKey, upgradeNotes }: { tabs: DocumentTabs; tabKey: number; upgradeNotes: Release[] }) {
@@ -1771,6 +1781,19 @@ export default function App({ tabs, tabKey, upgradeNotes }: { tabs: DocumentTabs
       {dialog === "upgrade" && <ChangelogDialog upgradeNotes={upgradeNotes} onClose={() => setDialog(null)} />}
       {doc && imageView && <ImageViewer pdf={doc.pdf} target={imageView} onClose={() => setImageView(null)} />}
       {dialog === "url" && <OpenUrlDialog key={linkDraft} initial={linkDraft} onClose={() => setDialog(null)} onSubmit={(url) => { setDialog(null); tabs.open([{ kind: "url", name: new URL(url).hostname, url }]); }} />}
+      <AndroidBackBridge
+        active={active}
+        onBack={() => {
+          if (dialog) { setDialog(null); return true; }
+          if (signing) { setSigning(false); return true; }
+          if (imageView) { setImageView(null); return true; }
+          if (searchOpen) { closeSearch(); return true; }
+          if (aiOpen) { setAiOpen(false); return true; }
+          if (historyOpen) { setHistoryOpen(false); return true; }
+          if (navigation.back && navigationRef.current) { navigationRef.current.back(); return true; }
+          return false;
+        }}
+      />
       {dialog === "tools" && (
         <PdfToolsModal
           activeDoc={doc ? {
