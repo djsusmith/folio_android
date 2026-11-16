@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Folio Android — Offline PDF Reader, Editor, Converter &amp; OCR</title>
+    <style>
+      :root { --bg: #111214; --surface: #1b1d21; --text: #f3f4f6; --muted: #9ca3af; --accent: #e8553e; --line: #2a2d34; }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+      .wrap { max-width: 960px; margin: 0 auto; padding: 48px 20px; }
+      .hero { text-align: center; padding: 32px 0 40px; }
+      .badge { display: inline-block; padding: 4px 12px; border-radius: 999px; background: rgba(232,85,62,.15); color: #ff8a75; font-size: 13px; font-weight: 600; margin-bottom: 14px; }
+      h1 { font-size: clamp(2rem, 5vw, 3.1rem); margin: 0 0 12px; letter-spacing: -0.02em; }
+      .lead { color: var(--muted); font-size: 1.1rem; max-width: 640px; margin: 0 auto 28px; }
+      .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+      .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 10px; font-weight: 600; text-decoration: none; border: 1px solid var(--line); color: var(--text); background: var(--surface); }
+      .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 36px; }
+      .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+      .card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+      .card p { margin: 0; color: var(--muted); font-size: 0.94rem; }
+      footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); text-align: center; color: var(--muted); font-size: 0.9rem; }
+      footer a { color: var(--text); }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="hero">
+        <span class="badge">100% Offline &amp; Open Source</span>
+        <h1>Folio for Android</h1>
+        <p class="lead">A calm, fast PDF reader, editor, converter, and signer. Built for Android with offline English, Bangla, and Arabic OCR — your files never leave your device.</p>
+        <div class="actions">
+          <a class="btn primary" href="https://github.com/djsusmith/folio_android/releases/latest">Download Signed APK</a>
+          <a class="btn" href="https://github.com/djsusmith/folio_android">View on GitHub</a>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <h3>Smallpdf-Style Tools Hub</h3>
+          <p>Merge PDFs, split or extract pages, compress file size, convert Images to PDF, export PDF pages to PNG/JPEG ZIP, and convert DOCX to PDF offline.</p>
+        </div>
+        <div class="card">
+          <h3>Multilingual Offline OCR</h3>
+          <p>Pre-bundled Tesseract models for English, Bangla (বাংলা), and Arabic (العربية) — search and copy text from scanned PDFs without internet.</p>
+        </div>
+        <div class="card">
+          <h3>Touch &amp; Camera Signatures</h3>
+          <p>Draw your signature directly with finger or stylus, capture from paper with your camera, or upload an image and place it on any page.</p>
+        </div>
+        <div class="card">
+          <h3>Edit, Annotate &amp; Organize</h3>
+          <p>Highlight text, add notes, draw freehand, insert text boxes, reorder or delete pages, and share exported PDFs via Android Share Sheet.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p>Android port &amp; offline tools by <a href="https://github.com/djsusmith">djsusmith</a> · <a href="https://github.com/djsusmith/folio_android">djsusmith/folio_android</a></p>
+        <p>Based on <a href="https://github.com/Forward-Future/folio">Forward-Future/folio</a> (MIT License)</p>
+      </footer>
+    </main>
+  </body>
+</html>

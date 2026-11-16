@@ -1,4 +1,36 @@
-# Folio
+# Folio Android
+
+A fast, 100% offline PDF reader, editor, converter, and signer for **Android** — ported from [Folio](https://github.com/Forward-Future/folio) and maintained at **[djsusmith/folio_android](https://github.com/djsusmith/folio_android)**.
+
+- **Website:** [djsusmith.github.io/folio_android](https://djsusmith.github.io/folio_android/)
+- **Download APK:** [Latest Release (`folio-android-release.apk`)](https://github.com/djsusmith/folio_android/releases/latest)
+
+## Android Features
+
+- **Full PDF Reader & Editor:** Continuous scrolling, dark mode, highlights, notes, freehand drawing, text boxes, and page organization.
+- **Smallpdf-Style Offline Tools Hub:** Merge PDF, Split / Extract pages, Compress PDF, Images → PDF, PDF → Images (ZIP), and DOCX → PDF — all 100% client-side with zero uploads.
+- **Multilingual Offline OCR:** Pre-bundled Tesseract models for **English (`eng`)**, **Bangla (`ben`)**, and **Arabic (`ara`)** — works completely offline.
+- **Touch & Camera Signatures:** Draw signatures directly with finger or stylus, capture from paper via camera, or upload an image.
+- **Privacy First:** Desktop cloud AI providers are removed on Android, with an optional experimental On-Device AI toggle in Settings.
+
+## Building Android APK from Source
+
+```bash
+npm ci
+npm run assets
+npx vite build
+npx cap sync android
+cd android && ./gradlew assembleRelease
+```
+
+## Credits & License
+
+- **Android Port, Offline Tools Hub, Multilingual OCR & Touch Signatures:** [djsusmith](https://github.com/djsusmith) ([djsusmith/folio_android](https://github.com/djsusmith/folio_android))
+- **Upstream Desktop Folio:** [Forward-Future/folio](https://github.com/Forward-Future/folio) (MIT License)
+
+---
+
+# Folio (Upstream Desktop Documentation)
 
 A fast, clean PDF reader for Windows, macOS, and Linux. Read, highlight, annotate, sign, and ask AI about your
 documents. Free and open source, with no Folio account required.
