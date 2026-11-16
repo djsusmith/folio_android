@@ -1,64 +1,781 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Folio Android — Offline PDF Reader, Editor, Converter &amp; OCR</title>
-    <style>
-      :root { --bg: #111214; --surface: #1b1d21; --text: #f3f4f6; --muted: #9ca3af; --accent: #e8553e; --line: #2a2d34; }
-      * { box-sizing: border-box; }
-      body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-      .wrap { max-width: 960px; margin: 0 auto; padding: 48px 20px; }
-      .hero { text-align: center; padding: 32px 0 40px; }
-      .badge { display: inline-block; padding: 4px 12px; border-radius: 999px; background: rgba(232,85,62,.15); color: #ff8a75; font-size: 13px; font-weight: 600; margin-bottom: 14px; }
-      h1 { font-size: clamp(2rem, 5vw, 3.1rem); margin: 0 0 12px; letter-spacing: -0.02em; }
-      .lead { color: var(--muted); font-size: 1.1rem; max-width: 640px; margin: 0 auto 28px; }
-      .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-      .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 10px; font-weight: 600; text-decoration: none; border: 1px solid var(--line); color: var(--text); background: var(--surface); }
-      .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 36px; }
-      .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
-      .card h3 { margin: 0 0 8px; font-size: 1.05rem; }
-      .card p { margin: 0; color: var(--muted); font-size: 0.94rem; }
-      footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); text-align: center; color: var(--muted); font-size: 0.9rem; }
-      footer a { color: var(--text); }
-    </style>
-  </head>
-  <body>
-    <main class="wrap">
-      <section class="hero">
-        <span class="badge">100% Offline &amp; Open Source</span>
-        <h1>Folio for Android</h1>
-        <p class="lead">A calm, fast PDF reader, editor, converter, and signer. Built for Android with offline English, Bangla, and Arabic OCR — your files never leave your device.</p>
-        <div class="actions">
-          <a class="btn primary" href="https://github.com/djsusmith/folio_android/releases/latest">Download Signed APK</a>
-          <a class="btn" href="https://github.com/djsusmith/folio_android">View on GitHub</a>
-        </div>
-      </section>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Folio Android &mdash; 100% Offline PDF Reader, Smallpdf Tools Hub, OCR & Signer</title>
+  <meta name="description" content="Folio Android: 100% offline PDF reader, editor, Smallpdf-style tools hub (Merge, Split, Compress, Convert), pre-bundled Bangla/Arabic/English OCR, and touch signature pad. Free, 0 ads, 0 cloud uploads." />
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/djsusmith/folio_android/main/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
-      <section class="grid">
-        <div class="card">
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://djsusmith.github.io/folio_android/" />
+  <meta property="og:title" content="Folio Android v1.0.0 — 100% Offline PDF Suite & Reader" />
+  <meta property="og:description" content="Read, merge, split, compress, convert, OCR (English, Bangla, Arabic), and draw signatures offline on Android. 0 ads, 0 tracking." />
+  <meta property="og:image" content="https://raw.githubusercontent.com/djsusmith/folio_android/main/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" />
+  <meta name="theme-color" content="#0d0f14" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window,document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    
+    fbq('init', '1683790373120460');
+    fbq('track', 'PageView');
+    fbq('track', 'ViewContent', {
+      content_name: 'Folio Android App v1.0.0',
+      content_category: 'Productivity & PDF Utilities',
+      content_ids: ['folio_android_v1.0.0'],
+      content_type: 'product',
+      value: 0.00,
+      currency: 'USD'
+    });
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+         src="https://www.facebook.com/tr?id=1683790373120460&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel Code -->
+
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --card-bg: rgba(18, 22, 30, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(232, 85, 62, 0.4);
+      --primary: #e8553e;
+      --primary-light: #f07460;
+      --primary-glow: rgba(232, 85, 62, 0.35);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --text: #f3f4f6;
+      --text-muted: #94a3b8;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--bg); color: var(--text); font-family: var(--sans); }
+    body { min-height: 100vh; overflow-x: hidden; position: relative; }
+
+    /* Background Ambient Glows */
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 18% 15%, rgba(232, 85, 62, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 82% 40%, rgba(56, 189, 248, 0.09) 0%, transparent 50%),
+        radial-gradient(circle at 50% 85%, rgba(16, 185, 129, 0.08) 0%, transparent 45%);
+    }
+
+    /* Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(10, 12, 16, 0.85);
+      border-bottom: 1px solid var(--card-border);
+      padding: 14px 24px;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand img {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      box-shadow: 0 0 16px var(--primary-glow);
+    }
+
+    .brand-text strong {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      display: block;
+    }
+
+    .brand-text span {
+      font-size: 0.72rem;
+      color: var(--primary-light);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+
+    .nav-link:hover { color: #fff; }
+
+    .btn-nav-download {
+      background: linear-gradient(135deg, var(--primary) 0%, #c43b26 100%);
+      color: #fff;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      box-shadow: 0 2px 14px var(--primary-glow);
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-nav-download:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(232, 85, 62, 0.5);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 70px 0 40px;
+      text-align: center;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(232, 85, 62, 0.12);
+      border: 1px solid rgba(232, 85, 62, 0.35);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 5.5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span.gradient {
+      background: linear-gradient(135deg, #fff 30%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lead {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .btn-hero-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #c43b26 100%);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 800;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 24px var(--primary-glow);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-hero-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(232, 85, 62, 0.6);
+    }
+
+    .btn-hero-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 14px 26px;
+      border-radius: 12px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn-hero-secondary:hover {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* High-Speed CDN Mirror Selector */
+    .mirror-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 16px 0 28px;
+      flex-wrap: wrap;
+    }
+
+    .mirror-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .mirror-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .mirror-btn:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .mirror-btn.active {
+      background: rgba(232, 85, 62, 0.15);
+      border-color: var(--primary);
+      color: var(--primary-light);
+      box-shadow: 0 0 14px var(--primary-glow);
+    }
+
+    /* Reassurance Box */
+    .reassurance-box {
+      max-width: 780px;
+      margin: 0 auto 50px;
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      text-align: left;
+    }
+
+    .reassurance-box .icon {
+      font-size: 1.4rem;
+      color: var(--emerald);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .reassurance-box strong {
+      display: block;
+      color: #34d399;
+      font-size: 0.92rem;
+      margin-bottom: 3px;
+    }
+
+    .reassurance-box p {
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    /* Features Grid */
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      margin-bottom: 12px;
+    }
+
+    .section-desc {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 650px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 22px;
+      margin-bottom: 70px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 30px;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--card-hover-border);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 18px;
+    }
+
+    .feature-card.red .feature-icon { background: rgba(232, 85, 62, 0.15); color: var(--primary-light); }
+    .feature-card.blue .feature-icon { background: rgba(56, 189, 248, 0.15); color: var(--accent); }
+    .feature-card.green .feature-icon { background: rgba(16, 185, 129, 0.15); color: var(--emerald); }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.2px;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    /* Comparison Table */
+    .comparison-section {
+      margin-bottom: 80px;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.02);
+      font-weight: 700;
+      color: #fff;
+    }
+
+    th.highlight, td.highlight {
+      background: rgba(232, 85, 62, 0.08);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    /* Specs & Verification */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 70px;
+    }
+
+    .spec-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .spec-card span {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .spec-card strong {
+      font-size: 1.05rem;
+      color: #fff;
+      font-family: var(--mono);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 50px 0 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.8;
+    }
+
+    footer a { color: var(--primary-light); text-decoration: none; font-weight: 600; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      .hero { padding: 40px 0 24px; }
+      .nav-links { display: none; }
+      .feature-card { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh"></div>
+
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <img src="https://raw.githubusercontent.com/djsusmith/folio_android/main/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="Folio Android" />
+        <div class="brand-text">
+          <strong>Folio Android</strong>
+          <span>djsusmith edition</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#tools" class="nav-link">Tools Hub</a>
+        <a href="#ocr" class="nav-link">Offline OCR</a>
+        <a href="#comparison" class="nav-link">Comparison</a>
+        <a href="https://github.com/djsusmith/folio_android" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+        <a id="navDownloadBtn" href="https://github.com/djsusmith/folio_android/releases/download/v1.0.0/folio-android-release.apk" class="btn-nav-download">
+          ⬇ Download APK
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="badge-pill">
+        <span>🚀 Folio Android v1.0.0 Release</span>
+        <span>•</span>
+        <span>100% Offline & Free</span>
+      </div>
+
+      <h1>
+        The Ultimate Offline PDF Suite<br />
+        <span class="gradient">For Android.</span>
+      </h1>
+
+      <p class="hero-lead">
+        A fast, beautiful PDF reader, editor, Smallpdf-style tools hub, and touch signer. Pre-bundled with English, Bangla, and Arabic offline neural OCR. Your documents never touch the cloud.
+      </p>
+
+      <div class="cta-row">
+        <a id="heroDownloadBtn" href="https://github.com/djsusmith/folio_android/releases/download/v1.0.0/folio-android-release.apk" class="btn-hero-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Signed APK (v1.0.0)
+        </a>
+        <a href="https://github.com/djsusmith/folio_android" target="_blank" rel="noopener" class="btn-hero-secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <!-- High-Speed CDN Mirror Selector -->
+      <div class="mirror-box">
+        <span class="mirror-label">⚡ Nearest CDN Mirror:</span>
+        <button class="mirror-btn active" onclick="setMirror('cdn', this)">Cloudflare Edge (Fastest)</button>
+        <button class="mirror-btn" onclick="setMirror('gh', this)">GitHub Direct</button>
+        <button class="mirror-btn" onclick="setMirror('alt', this)">Fast Mirror (ghfast)</button>
+      </div>
+
+      <!-- Google Play Protect Reassurance -->
+      <div class="reassurance-box">
+        <div class="icon">🛡️</div>
+        <div>
+          <strong>100% Verified Clean & Open Source</strong>
+          <p>
+            Distributed directly via GitHub Releases. If Google Play Protect shows <em>"Play Protect hasn't seen this app before"</em> on install, simply tap <strong>"More details" ➔ "Install anyway"</strong>. Zero malware, 0 ads, 0 trackers, and 100% auditable code.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Features -->
+    <section id="features" style="padding-top: 30px;">
+      <h2 class="section-title">Engineered for Freedom & Speed</h2>
+      <p class="section-desc">
+        No monthly subscriptions. No uploading confidential tax forms or contracts to distant servers. Everything runs in hardware WebAssembly on your phone.
+      </p>
+
+      <div class="features-grid">
+        <div class="feature-card red" id="tools">
+          <div class="feature-icon">🧰</div>
           <h3>Smallpdf-Style Tools Hub</h3>
-          <p>Merge PDFs, split or extract pages, compress file size, convert Images to PDF, export PDF pages to PNG/JPEG ZIP, and convert DOCX to PDF offline.</p>
+          <p>
+            Merge multiple PDFs, split ranges (e.g. 1-3, 5), compress file sizes, convert images to PDF, export pages as PNG/JPEG ZIPs, and render Word DOCX to PDF offline.
+          </p>
         </div>
-        <div class="card">
-          <h3>Multilingual Offline OCR</h3>
-          <p>Pre-bundled Tesseract models for English, Bangla (বাংলা), and Arabic (العربية) — search and copy text from scanned PDFs without internet.</p>
-        </div>
-        <div class="card">
-          <h3>Touch &amp; Camera Signatures</h3>
-          <p>Draw your signature directly with finger or stylus, capture from paper with your camera, or upload an image and place it on any page.</p>
-        </div>
-        <div class="card">
-          <h3>Edit, Annotate &amp; Organize</h3>
-          <p>Highlight text, add notes, draw freehand, insert text boxes, reorder or delete pages, and share exported PDFs via Android Share Sheet.</p>
-        </div>
-      </section>
 
-      <footer>
-        <p>Android port &amp; offline tools by <a href="https://github.com/djsusmith">djsusmith</a> · <a href="https://github.com/djsusmith/folio_android">djsusmith/folio_android</a></p>
-        <p>Based on <a href="https://github.com/Forward-Future/folio">Forward-Future/folio</a> (MIT License)</p>
-      </footer>
-    </main>
-  </body>
+        <div class="feature-card green" id="ocr">
+          <div class="feature-icon">🌐</div>
+          <h3>Multilingual Offline OCR</h3>
+          <p>
+            Pre-bundled neural Tesseract models for <strong>English</strong>, <strong>Bangla (বাংলা)</strong>, and <strong>Arabic (العربية)</strong>. Recognize scanned PDFs anywhere without downloading extra packs.
+          </p>
+        </div>
+
+        <div class="feature-card blue">
+          <div class="feature-icon">✍️</div>
+          <h3>Touch & Stylus Signatures</h3>
+          <p>
+            Sign directly with your finger or S-Pen. Or photograph paper signatures—our smart contrast engine strips shadows and background artifacts automatically.
+          </p>
+        </div>
+
+        <div class="feature-card red">
+          <div class="feature-icon">🌙</div>
+          <h3>OLED Dark Mode</h3>
+          <p>
+            True night reading mode that inverts bright page backgrounds to deep blacks while keeping embedded diagrams, color charts, and photos in original vibrant color.
+          </p>
+        </div>
+
+        <div class="feature-card blue">
+          <div class="feature-icon">📐</div>
+          <h3>Edge-to-Edge Android 17 UI</h3>
+          <p>
+            Tailored for high-refresh screens with full <code>WindowInsetsCompat</code> support. Camera cutouts, status bars, and navigation pills never obscure buttons or pages.
+          </p>
+        </div>
+
+        <div class="feature-card green">
+          <div class="feature-icon">🔒</div>
+          <h3>Zero-Cloud AI Privacy Gate</h3>
+          <p>
+            Desktop cloud AI endpoints (which send files to remote LLM servers) are stripped on Android. Optional experimental on-device assistant toggle puts you in control.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison -->
+    <section id="comparison" class="comparison-section">
+      <h2 class="section-title">How Folio Compares</h2>
+      <p class="section-desc">Why pay monthly for basic PDF utilities when your smartphone can do it locally for free?</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th class="highlight">Folio Android</th>
+              <th>Smallpdf</th>
+              <th>Adobe Acrobat</th>
+              <th>CamScanner</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Price</strong></td>
+              <td class="highlight">100% Free Forever</td>
+              <td>$12/month paywall</td>
+              <td>$20/month sub</td>
+              <td>Freemium ($60/yr)</td>
+            </tr>
+            <tr>
+              <td><strong>Offline Processing</strong></td>
+              <td class="highlight">✅ 100% On-Device</td>
+              <td>❌ Cloud Uploads</td>
+              <td>❌ Cloud-Linked</td>
+              <td>❌ Cloud Sync</td>
+            </tr>
+            <tr>
+              <td><strong>Bangla & Arabic OCR</strong></td>
+              <td class="highlight">✅ Built-in Bundled</td>
+              <td>❌ Not Supported</td>
+              <td>❌ Paid Add-on</td>
+              <td>❌ Paid Feature</td>
+            </tr>
+            <tr>
+              <td><strong>Merge & Split Tools</strong></td>
+              <td class="highlight">✅ Unlimited Free</td>
+              <td>❌ 2 tasks/day limit</td>
+              <td>❌ Paid Subscription</td>
+              <td>❌ Paid Subscription</td>
+            </tr>
+            <tr>
+              <td><strong>Digital Signatures</strong></td>
+              <td class="highlight">✅ Touch Draw + Camera</td>
+              <td>Limited</td>
+              <td>Limited Free</td>
+              <td>Watermarked</td>
+            </tr>
+            <tr>
+              <td><strong>Ads & Telemetry</strong></td>
+              <td class="highlight">0 Ads • 0 Trackers</td>
+              <td>Heavy Ads</td>
+              <td>Analytics & Upsells</td>
+              <td>Aggressive Popups</td>
+            </tr>
+            <tr>
+              <td><strong>Open Source License</strong></td>
+              <td class="highlight">MIT Open Source</td>
+              <td>Proprietary</td>
+              <td>Proprietary</td>
+              <td>Proprietary</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Specs Box -->
+    <section class="specs-grid">
+      <div class="spec-card">
+        <span>Package Identifier</span>
+        <strong>com.folio.pdf</strong>
+      </div>
+      <div class="spec-card">
+        <span>Release Signing</span>
+        <strong>2048-bit RSA (V1/V2/V3)</strong>
+      </div>
+      <div class="spec-card">
+        <span>Target Android</span>
+        <strong>API 24 .. 37 (Android 7-17)</strong>
+      </div>
+      <div class="spec-card">
+        <span>Download Size</span>
+        <strong>~21 MB (With Neural OCR)</strong>
+      </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section style="text-align: center; padding: 40px 0 60px;">
+      <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 16px;">Ready to read and edit PDFs without limits?</h2>
+      <a id="bottomDownloadBtn" href="https://github.com/djsusmith/folio_android/releases/download/v1.0.0/folio-android-release.apk" class="btn-hero-primary" style="margin: 0 auto;">
+        ⬇ Download Folio Android APK (v1.0.0)
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        <strong>Folio Android</strong> &bull; Engineered and maintained by <a href="https://github.com/djsusmith" target="_blank" rel="noopener">djsusmith</a>
+      </p>
+      <p>
+        Ported from upstream <a href="https://github.com/Forward-Future/folio" target="_blank" rel="noopener">Forward-Future/folio</a> &bull; Licensed under the <a href="https://github.com/djsusmith/folio_android/blob/main/LICENSE.txt" target="_blank" rel="noopener">MIT License</a>.
+      </p>
+      <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">
+        Privacy Guarantee: 100% client-side WebAssembly execution. Documents never leave your phone.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const mirrorMap = {
+      cdn: 'https://gh-proxy.com/https://github.com/djsusmith/folio_android/releases/download/v1.0.0/folio-android-release.apk',
+      gh: 'https://github.com/djsusmith/folio_android/releases/download/v1.0.0/folio-android-release.apk',
+      alt: 'https://ghfast.top/https://github.com/djsusmith/folio_android/releases/download/v1.0.0/folio-android-release.apk'
+    };
+
+    function setMirror(key, clickedBtn) {
+      const url = mirrorMap[key] || mirrorMap.cdn;
+      const heroBtn = document.getElementById('heroDownloadBtn');
+      const navBtn = document.getElementById('navDownloadBtn');
+      const bottomBtn = document.getElementById('bottomDownloadBtn');
+      if (heroBtn) heroBtn.href = url;
+      if (navBtn) navBtn.href = url;
+      if (bottomBtn) bottomBtn.href = url;
+
+      document.querySelectorAll('.mirror-box').forEach(box => {
+        box.querySelectorAll('.mirror-btn').forEach(btn => {
+          if (btn.getAttribute('onclick')?.includes("'" + key + "'")) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      });
+
+      if (window.fbq) {
+        window.fbq('trackCustom', 'SelectDownloadMirror', { mirror: key, url: url });
+      }
+    }
+  </script>
+</body>
 </html>

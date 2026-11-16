@@ -1,398 +1,216 @@
-# Folio Android
+<p align="center">
+  <img src="https://raw.githubusercontent.com/djsusmith/folio_android/main/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="128" height="128" alt="Folio Android Icon" />
+</p>
 
-A fast, 100% offline PDF reader, editor, converter, and signer for **Android** — ported from [Folio](https://github.com/Forward-Future/folio) and maintained at **[djsusmith/folio_android](https://github.com/djsusmith/folio_android)**.
+<h1 align="center">Folio for Android</h1>
 
-- **Website:** [djsusmith.github.io/folio_android](https://djsusmith.github.io/folio_android/)
-- **Download APK:** [Latest Release (`folio-android-release.apk`)](https://github.com/djsusmith/folio_android/releases/latest)
+<p align="center">
+  <strong>100% Offline PDF Reader, Editor, Smallpdf-Style Tools Hub, Multilingual OCR & Digital Signer for Android</strong>
+</p>
 
-## Android Features
+<p align="center">
+  <a href="https://github.com/djsusmith/folio_android/releases/latest"><img src="https://img.shields.io/github/v/release/djsusmith/folio_android?style=for-the-badge&color=e8553e&label=Release" alt="Latest Release" /></a>
+  <a href="https://github.com/djsusmith/folio_android/blob/main/LICENSE.txt"><img src="https://img.shields.io/badge/License-MIT-34D399?style=for-the-badge&logo=opensourceinitiative&logoColor=white" alt="MIT License" /></a>
+  <a href="https://djsusmith.github.io/folio_android/"><img src="https://img.shields.io/badge/Live-Website%20%26%20Docs-38BDF8?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Website" /></a>
+  <img src="https://img.shields.io/badge/Platform-Android%207.0%2B%20(API%2024%2B)-F97316?style=for-the-badge&logo=android&logoColor=white" alt="Android Support" />
+  <img src="https://img.shields.io/badge/Architecture-ARM64%20%2F%20Universal-purple?style=for-the-badge&logo=android&logoColor=white" alt="Architecture" />
+  <img src="https://img.shields.io/badge/Privacy-100%25%20Offline%20%E2%80%A2%200%20Trackers-10b981?style=for-the-badge&logo=shield&logoColor=white" alt="100% Offline" />
+</p>
 
-- **Full PDF Reader & Editor:** Continuous scrolling, dark mode, highlights, notes, freehand drawing, text boxes, and page organization.
-- **Smallpdf-Style Offline Tools Hub:** Merge PDF, Split / Extract pages, Compress PDF, Images → PDF, PDF → Images (ZIP), and DOCX → PDF — all 100% client-side with zero uploads.
-- **Multilingual Offline OCR:** Pre-bundled Tesseract models for **English (`eng`)**, **Bangla (`ben`)**, and **Arabic (`ara`)** — works completely offline.
-- **Touch & Camera Signatures:** Draw signatures directly with finger or stylus, capture from paper via camera, or upload an image.
-- **Privacy First:** Desktop cloud AI providers are removed on Android, with an optional experimental On-Device AI toggle in Settings.
-
-## Building Android APK from Source
-
-```bash
-npm ci
-npm run assets
-npx vite build
-npx cap sync android
-cd android && ./gradlew assembleRelease
-```
-
-## Credits & License
-
-- **Android Port, Offline Tools Hub, Multilingual OCR & Touch Signatures:** [djsusmith](https://github.com/djsusmith) ([djsusmith/folio_android](https://github.com/djsusmith/folio_android))
-- **Upstream Desktop Folio:** [Forward-Future/folio](https://github.com/Forward-Future/folio) (MIT License)
+<p align="center">
+  <a href="#-quick-download"><strong>⬇️ Download APK (v1.0.0)</strong></a> •
+  <a href="https://djsusmith.github.io/folio_android/"><strong>🌐 Official Website</strong></a> •
+  <a href="#-key-features"><strong>✨ Features</strong></a> •
+  <a href="#-comparison"><strong>📊 Comparison</strong></a> •
+  <a href="#-architecture"><strong>🏗️ Architecture</strong></a> •
+  <a href="#-building-from-source"><strong>🛠️ Build Guide</strong></a> •
+  <a href="#-credits--license"><strong>📜 Credits</strong></a>
+</p>
 
 ---
 
-# Folio (Upstream Desktop Documentation)
+## 🚀 Overview
 
-A fast, clean PDF reader for Windows, macOS, and Linux. Read, highlight, annotate, sign, and ask AI about your
-documents. Free and open source, with no Folio account required.
+**Folio Android** (`com.folio.pdf`) is the standalone mobile edition and full evolution of [Folio](https://github.com/Forward-Future/folio) crafted specifically for Android. Built and maintained by **[djsusmith](https://github.com/djsusmith)**, it bridges high-performance client-side PDF rendering (`pdfjs-dist` + `@embedpdf/pdfium`) with an offline **Smallpdf-style Tools Hub**, pre-bundled **multilingual offline OCR (English, Bangla, Arabic)**, and a dedicated **touch / stylus signature pad**—**100% private, 0 ads, 0 telemetry, and completely free forever**.
 
-![Folio with the Ask AI panel open, answering a question about the document with page citations](docs/screenshots/ask-ai.png)
+Unlike proprietary cloud tools that upload sensitive documents to remote servers or lock basic operations behind monthly paywalls, every single byte in Folio Android is processed locally on your phone's processor using hardware WebAssembly.
 
-| Highlights and notes | Search |
-| --- | --- |
-| ![Color highlights in a document, with their notes in the sidebar](docs/screenshots/highlights-and-notes.png) | ![Searching a document in the dark theme, with every match highlighted and a list of matching pages](docs/screenshots/search.png) |
+---
 
-## Download
+## ⚡ Quick Download
 
-| Platform | Download | Updates |
-| --- | --- | --- |
-| **Windows** 10/11 (64-bit) | [Folio-Setup.exe](https://github.com/Forward-Future/folio-releases/releases/latest/download/Folio-Setup.exe) | Automatic |
-| **macOS** 12 or later (Apple Silicon and Intel) | [Folio-mac.dmg](https://github.com/Forward-Future/folio-releases/releases/latest/download/Folio-mac.dmg) | Folio tells you when a new version is out |
-| **Linux**: Ubuntu, Debian, and derivatives (64-bit) | [Folio-linux-amd64.deb](https://github.com/Forward-Future/folio-releases/releases/latest/download/Folio-linux-amd64.deb) | Automatic, with your system updates (apt) |
-| **Linux**: other distributions (64-bit) | [Folio-linux-x86_64.AppImage](https://github.com/Forward-Future/folio-releases/releases/latest/download/Folio-linux-x86_64.AppImage) | Automatic |
+Get the official, production-signed release APK directly from GitHub:
 
-[All releases](https://github.com/Forward-Future/folio-releases/releases) · [Changelog](CHANGELOG.md) · Prefer not to
-install on Windows? **Folio-Portable.exe** on the release page runs as-is (it doesn't auto-update).
-
-Folio's builds aren't signed with paid developer certificates yet, so the first launch needs one extra step:
-
-- **Windows:** if SmartScreen warns, choose **More info → Run anyway**.
-- **macOS:** open the DMG and drag Folio to Applications. The first time you open it, macOS says it can't verify the
-  developer: click **Done**, then go to **System Settings → Privacy & Security** and click **Open Anyway**.
-- **Linux (.deb):** `sudo apt install ./Folio-linux-amd64.deb`, then open Folio from your applications menu. The
-  package adds Folio's signed apt repository, so new versions arrive with your regular system updates (or
-  `sudo apt update && sudo apt upgrade`). Copies installed from a .deb before 1.9 need the new .deb installed once.
-- **Linux (AppImage):** make it executable (`chmod +x Folio-linux-x86_64.AppImage`) and run it. AppImages need FUSE 2:
-  `sudo apt install libfuse2t64` on Ubuntu 24.04 or later, `libfuse2` on older releases.
-
-Or build Folio yourself from source (below).
-
-## Features
-
-### Open PDFs and web links
-
-- **Document tabs.** Pick or drop several PDFs together, or choose **More → New tab**. The tab strip appears beneath
-  the toolbar when two or more tabs are open. Each document keeps its page, zoom, and edits when you switch.
-- **PDF URLs:** choose **Open from URL** (`Ctrl+Shift+O`), or drop a link or paste it with `Ctrl+V` outside a text
-  field to fill it in, then press **Open**. Folio downloads and opens the PDF, follows redirects, and uses the server's
-  filename when available. Folio asks once more before opening an address on your computer or local network.
-- **Webpage to PDF:** use the same URL workflow for a webpage. Folio converts it into a PDF with selectable text,
-  ready for highlights, notes, and Ask AI. The conversion preserves the site's on-screen layout, backgrounds,
-  transparency, colors, and images instead of switching to its print styles.
-- **Word documents to PDF:** open a `.docx` or `.doc` file the same ways as a PDF (**Open with → Folio**, the file
-  picker, or drag and drop). Folio opens the PDF and saves a private copy beside the original when possible
-  ("Report.docx" gets "Report.pdf"). Occupied names get a number. Reopening reuses a copy only if both files still
-  match Folio's conversion record. Opening a symbolic link, or a file on a separate volume on macOS, skips the
-  automatic save. Folio converts with
-  Microsoft Word on Windows when it's installed, otherwise with LibreOffice, otherwise with its own converter for
-  `.docx` (text, headings, lists, tables, and images, in a simpler layout). `.doc` files need Word or LibreOffice,
-  except on macOS. Installing Folio adds it to **Open with** for Word documents without making it their default app.
-- **Password-protected PDFs:** enter the password to read and annotate a protected document. These documents are not
-  kept in the recent library, and their annotations and AI conversations are not persisted locally between sessions.
-- **Sample document:** try the built-in tour from the home screen without finding a PDF first.
-
-URL opening, webpage conversion, and Word conversion require the desktop app. Failed downloads leave your current document open.
-
-### Read and navigate
-
-- **Back and Forward:** after following an internal link or an outline entry, choose **More → Back** to return to
-  your place. The first jump also shows a brief, clickable Back hint. **More → Forward** appears after you go back.
-  Each tab remembers its own positions, zoom, and rotation until the document closes. Use **Alt+← / Alt+→**
-  (**⌥← / ⌥→** on macOS) while reading. Text fields and dialogs keep their normal editing controls.
-- **Continuous scrolling** with selectable text, previous/next controls, and a page-number field for jumping directly
-  to a page. Enable **Settings → General → Reading → Scroll one page at a time** to turn pages with the mouse wheel.
-- **Pages and Outline tabs:** browse page thumbnails or the PDF's existing outline/bookmarks; hide the sidebar when
-  you want more reading space.
-- **Personal bookmarks:** click the ribbon beside a page number in **Pages** to save or remove a bookmark without
-  leaving your current page. Turn on **Bookmarked** at the top of the sidebar to see just your saved pages,
-  then select a thumbnail to jump to it. These bookmarks are included in Markdown and JSON exports. Folio remembers them locally
-  when you reopen a PDF, except for password-protected documents.
-- **Organize pages** from either sidebar tab. Drag thumbnails or enter a new position, and delete pages: Ctrl-click
-  (⌘-click on macOS) or Shift-click to select several, then press **Delete**. Undo and redo with `Ctrl+Z` and
-  `Ctrl+Shift+Z`. Right-click selected thumbnails in **Pages** to start with those pages deleted. Save, then open the
-  organized PDF copy; the original file stays unchanged.
-- **Export selected pages** from the Pages sidebar. Ctrl-click thumbnails (⌘-click on macOS) to select individual pages, or Shift-click for a range. Right-click a selected thumbnail to save those pages in document order as a new PDF.
-- **Search as you type:** match case or whole words, see the current match and total count, browse per-page snippets
-  and match counts, and move between matches with `Enter` / `Shift+Enter`.
-- **Flexible views:** fit to width, fit to page, automatic sizing, preset zoom levels, zoom buttons, `Ctrl+wheel` /
-  trackpad pinch, two-page spreads, and page rotation.
-- **Focus mode:** press `F` for distraction-free, fullscreen reading; press `Esc` to return.
-- **Light and dark themes**, plus an independent **⋯ → PDF dark mode** setting that dims bright pages while keeping
-  photos and figures in their original colors, including in thumbnails. Both settings survive restarts.
-
-[![The Back to page 1 hint above the reading controls after following a link to page 4](docs/screenshots/back-to-page.png)](docs/screenshots/pdf-link-history.png)
-
-### Edit existing text and images
-
-Choose **Edit mode**, then click the text you want to change and type on the page. Press **Enter** or click outside the line to apply it. **Esc** cancels typing. Clear a line to delete it.
-
-Click an embedded picture and choose **Replace image…** to select a PNG or JPEG. You can leave Edit mode to read your changes or use **Save copy** to export and open the edited PDF.
-
-Open **More → Version history** to review your changes. Saving a changed copy keeps the original PDF and a numbered version on this device. Text edits show the old and new wording, and image replacements show the filename and page. Open or download an earlier version from the panel. History is available for unencrypted PDFs up to 50 MB and can be cleared per document.
-
-Text keeps its original font and position. Longer replacements can overlap neighboring content, so check the page after applying a change.
-Only characters available in that font can be used. Scanned words, outlined lettering, and objects inside grouped artwork
-cannot be edited as text. Image replacement supports embedded image objects on pages without inline image data.
-The editor works with unsigned, unencrypted PDFs.
-
-### Highlight, draw, and take notes
-
-- **Select text in scans.** Folio recognizes English by default. In **Settings → General → Reading → Scan languages**, search
-  for a language by its English or local name. Select the languages in your document. The dropdown shows the total
-  size of any packs to download. Folio keeps them on this device for offline use and re-reads open scans.
-  The page you jump to gets priority. A message above the page controls shows when text is still being prepared.
-  Once it clears, drag across the words to copy, highlight, or ask about a passage. Recognition runs offline.
-- **One-click highlights:** select text, then choose yellow, green, blue, pink, or red from the selection toolbar;
-  `H` applies the current highlight color.
-- Choose **Highlight** in the toolbar to mark each passage in the current color as soon as you select it.
-  Choose **Done** or press `Esc` to return to reading.
-- **Notes on passages:** type into the selection toolbar and press `Enter` to highlight with a note, or press `N`
-  with text selected to focus the note box.
-- **Edit existing highlights:** click one to recolor it, edit its note, ask AI about the passage, or remove it.
-- **Draw on a page:** choose **Draw** (`D`) for a freehand pen, rectangle, oval, or arrow. With **Pen** selected,
-  choose **Thin**, **Medium**, or **Thick** for your next strokes. Pick a color, then drag on the page.
-  Drawings can be undone and are included when you save a PDF copy.
-- **Text boxes:** choose **Text** (`T`) to add text to a page, using the same ink palette. Click outside the box to
-  finish editing and return to Select. Choose Text again to add another box.
-- **Undo and redo** annotation edits with the usual keyboard shortcuts; choose **Done**, `V`, or `Esc` to leave a
-  drawing/text tool and return to selection.
-- **Notes tab:** review highlights, their notes, and text boxes; click an entry to jump to it, edit a highlight's note,
-  delete an entry, or ask AI about a highlight. A separate notes box holds thoughts about the whole document.
-- **Export reading notes:** in **Notes → Export**, copy Markdown or save a JSON file. JSON includes your notes,
-  highlights, text boxes, drawings and shapes with one-based page numbers, plus the PDF's outline bookmarks.
-  It includes stable annotation IDs, colors, and coordinates in unrotated PDF user space for use in other tools.
-- **Automatic local saving:** highlights, notes, drawings, and text boxes return when you reopen an
-  ordinary, non-password-protected PDF. Use **Save a copy** to share page annotations with other readers.
-
-<p>
-  <a href="docs/screenshots/pen-widths.png"><img src="docs/screenshots/pen-widths.png" width="485" alt="Thin, Medium, and Thick pen strokes on the same page"></a>
-  <a href="docs/screenshots/scan-languages.png"><img src="docs/screenshots/scan-languages.png" width="250" alt="English and Arabic selected in the scan language picker, with the download size shown"></a>
+<p align="center">
+  <a href="https://github.com/djsusmith/folio_android/releases/download/v1.0.0/folio-android-release.apk">
+    <img src="https://img.shields.io/badge/Download-Folio%20Android%20v1.0.0%20APK-e8553e?style=for-the-badge&logo=android&logoColor=white" height="42" alt="Download APK" />
+  </a>
 </p>
 
-### Add handwritten signatures
+| Metric | Specification |
+| :--- | :--- |
+| **Package Name** | `com.folio.pdf` |
+| **Latest Version** | **v1.0.0** (Build 1) |
+| **Target OS** | Android 7.0 (API 24) to Android 17 (API 37) |
+| **Architecture** | Universal / ARM64 / x86_64 WebAssembly Engine |
+| **Release Signing** | 2048-bit RSA Self-Signed Production Keystore (V1, V2, V3 APK Signing) |
+| **Download Size** | ~21 MB (Includes bundled English, Bangla & Arabic neural OCR models) |
+| **Security & Privacy** | 100% Free & Open Source (MIT), 0 Trackers, 0 Adware, 0 Cloud Uploads |
 
-Choose **Sign** in the toolbar to add a signature.
+> [!TIP]
+> **First-time Install Note (Google Play Protect):**
+> Because Folio Android is an independent open-source release distributed directly via GitHub rather than the Google Play Store, Play Protect may prompt *"Play Protect hasn't seen this app before"*.
+> Simply tap **"More details"** ➔ **"Install anyway"**. The entire codebase is 100% transparent, auditable, and open-source right here on GitHub.
 
-- **Capture on paper:** sign with dark ink on white paper, then use your camera or upload a PNG, JPEG, or WebP photo.
-- **Clean up the image:** crop to the signature and adjust ink sensitivity to remove the paper background. Capture
-  and image processing stay on your device.
-- **Suggested placement:** Folio checks the current page for empty PDF signature fields and likely signature labels,
-  then offers places to sign. Detection is a suggestion, not a guarantee that every field will be found.
-- **Preview and position:** review the actual page, pick a suggestion or place the signature manually, and adjust its
-  width before approving.
-- **Explicit approval:** nothing is added until you click **Approve and add signature**. Signatures are visual stamps,
-  not certificate-based digital signatures. Use **Save a copy** to keep a signed PDF; placed signatures are not part
-  of Folio's automatic annotation restoration.
-- **Optional reuse:** choose to remember a signature on this computer; remove the saved image in
-  **Settings → Storage → Signature → Forget**.
+---
 
-### Ask AI about a document
+## ✨ Key Features
 
-- **Choose a provider:** use your ChatGPT plan, your Claude subscription through
-  [Claude Code](https://claude.com/claude-code), your own OpenRouter API key, or any OpenAI-compatible endpoint, such as
-  another provider's API or a model running on your computer.
-- **Whole-document or passage questions:** open the Ask AI panel from the toolbar, select text and choose **Ask AI**,
-  or ask about an existing highlight.
-- **Streaming answers** with clickable page citations that jump back to the source page.
-- **Copy response** copies a finished AI answer with its Markdown formatting and page citations.
-- **Rendered mathematics:** inline and display LaTeX equations, with wide equations scrolling within the chat panel.
-  Supports `\( ... \)`, `\[ ... \]`, `$x$`, and `$$ ... $$`; existing saved answers render too.
-- **Provider and model selection**, a stop button for an in-progress answer, and a **+** button to start a fresh
-  conversation.
-- **Per-document history:** conversations are saved on this computer and restored when you reopen that document,
-  except for password-protected PDFs. The **+** button asks for confirmation before deleting that document's current
-  conversation and starting a new one. Choose **Cancel** to keep it.
-  Open **Settings → Storage → Stored data** to see how many documents have saved annotations or chats, including documents
-  removed from Recent. You can clear either category separately. Annotations include document notes and bookmarks.
-- **Account settings:** choose your default provider, sign in to or out of ChatGPT, and check Claude Code's connection
-  from **Settings → Ask AI**.
+### 🛠️ 1. Smallpdf-Style Offline Tools Hub
+Open any PDF or launch the Tools Hub directly from the welcome screen:
+- **Merge PDF:** Combine unlimited PDF files into a single consolidated document in your exact order.
+- **Split / Extract Pages:** Extract single pages or custom ranges (e.g. `1-3, 5, 8-10`) into a fresh PDF.
+- **Reorder & Organize:** Visually arrange, delete, and rotate pages before exporting.
+- **Compress PDF:** Re-sample heavy pages with Light (Best Quality), Balanced, or Maximum (Smallest) presets.
+- **Images → PDF:** Convert multiple PNG, JPEG, or WebP photos into a multi-page PDF document.
+- **PDF → Images (ZIP):** Render every page at high DPI and export as lossless PNG or lightweight JPEG inside a ZIP archive.
+- **DOCX → PDF:** Offline Word-to-PDF conversion with Canvas 2D font rendering preserving English, Bangla, and Arabic typography.
 
-Ask AI is optional and desktop-only. See [Using Ask AI](#using-ask-ai) for setup and [Privacy](#privacy) for what is sent.
+### 🌐 2. Pre-Bundled Multilingual Offline OCR (`eng` + `ben` + `ara`)
+- **Ready Out-of-the-Box:** Includes pre-compiled Tesseract LSTM traineddata for **English**, **Bengali (বাংলা)**, and **Arabic (العربية)**.
+- **Zero Network Dependency:** Recognize scanned documents and image-only PDFs anywhere—even in airplane mode.
+- **Searchable PDF Export:** Automatically embeds an invisible text layer over scanned pages, making them fully searchable and selectable.
 
-### Inspect images
+### ✍️ 3. Touch, Stylus & Camera Signature Suite
+- **Draw Signature:** Full touch and stylus signature canvas with velocity smoothing, stroke trimming, and instant placement.
+- **Camera Capture:** Photograph signatures on white paper; the intelligent edge detector and adaptive ink thresholding strip away paper shadows and background artifacts.
+- **Placement & Resize:** Drag, snap to detected form fields, or fine-tune position and dimensions with on-screen handles.
+- **Remembered Signatures:** Optionally save your signature unencrypted on-device for 1-tap signing on future documents.
 
-- Click a PDF image and choose **View larger** for a high-resolution, full-window view.
-- Switch between **Fit to window** and **Actual size**, or copy the image to your clipboard.
-- Choose **Open in browser** when an image has a web address. Images in converted webpages retain their original
-  image links.
+### 📖 4. World-Class Reading & Annotation Engine
+- **OLED Dark Mode & Night Reading:** Invert bright page backgrounds for comfortable reading in dark rooms while preserving photos and graphics in full color.
+- **Freehand Ink & Highlighter:** Draw annotations, highlight text with smart snapping, and jot down marginal notes.
+- **Text Box Annotations:** Insert custom typography, change font sizes, and position notes anywhere.
+- **Multi-Tab Workspace:** Open multiple documents simultaneously and switch between them smoothly.
 
-### Pick up where you left off
+### 📱 5. Native Android System Integration
+- **Edge-to-Edge Display Insets:** Native `WindowInsetsCompat` handling prevents status bars, camera hole cutouts, and navigation gestures from clipping controls.
+- **Hardware Back Button:** Integrated back handler smoothly closes modals, dialogs, drawers, and search bars before exiting.
+- **System File Associations:** Registered Android `ACTION_VIEW` intent filters open PDFs and DOCX files directly from WhatsApp, Telegram, Gmail, Chrome, and your file manager.
+- **Share Sheet & FileProvider:** Export, print, or share signed and converted PDFs directly to Google Drive, WhatsApp, Bluetooth, or local storage.
 
-- **Recent library:** keep up to eight recently opened PDFs with thumbnail previews and the last page read; reopen
-  with one click, remove individual entries, or choose **Clear all**. Removing entries also removes their saved recognized text; **Clear all** removes all saved recognized text. You can also clear saved recognized text from Settings without removing documents.
-- **Startup restore:** reopen the last active document automatically when it is still in the recent library.
-- **Reading state:** remember each document's page, scroll position, zoom, rotation, sidebar visibility, and two-page
-  mode.
-- **Window state:** restore the desktop window's size, monitor position, and maximized state.
+### 🔒 6. Zero Bloat & AI Privacy Gate
+- **Desktop Cloud AI Disabled:** Desktop third-party cloud AI vendors (OpenAI/Claude/OpenRouter) that send file data to external servers are completely removed on Android.
+- **Optional On-Device AI Toggle:** An experimental toggle in Settings allows local, on-device AI integration without leaking documents or consuming background bandwidth.
 
-### Save, print, and inspect
+---
 
-- **Save a copy** (`Ctrl+S`) exports a PDF with page annotations, including highlights and attached notes, drawings,
-  text boxes, and visual signatures. Your original file is not overwritten. Whole-document notes and AI chat history
-  stay in Folio; copy notes as Markdown when you want to share them.
-- **Print** (`Ctrl+P`, or `⌘P` on macOS) previews each page at its own proportions and prints the annotated PDF. On desktop, choose **Advanced** for [poster, booklet, or multiple pages per sheet](docs/printing.md).
-- **Document info** shows available metadata: filename, title, author, subject, page count and size, file size,
-  creation/modification dates, generating application, producer, and PDF version.
+## 📊 Comparison
 
-<p>
-  <a href="docs/screenshots/print-preview.png"><img src="docs/screenshots/print-preview.png" width="344" alt="The current PDF page in the Basic print preview"></a>
-  <a href="docs/screenshots/booklet-printing.png"><img src="docs/screenshots/booklet-printing.png" width="462" alt="Two PDF pages paired on a landscape sheet for booklet printing"></a>
-</p>
+| Feature | Folio Android | Smallpdf (Web / Mobile) | Adobe Acrobat Reader | CamScanner |
+| :--- | :---: | :---: | :---: | :---: |
+| **Cost** | **100% Free Forever** | \$12/mo paywall | Free / \$20/mo sub | Freemium / Watermarked |
+| **Offline Privacy** | **100% Local (0 Cloud)** | Files uploaded to cloud | Cloud-linked | Cloud-linked |
+| **Merge & Split Tools** | **Unlimited Offline** | 2 free tasks/day | Paid subscription | Paid subscription |
+| **Offline Bangla & Arabic OCR** | **Included Built-in** | No | Paid add-on | Paid subscription |
+| **Draw & Camera Signatures** | **Included Free** | Limited | Limited free | Watermarked |
+| **Ads & Trackers** | **0 Ads, 0 Trackers** | Heavy advertising | Tracking SDKs | Heavy ads & popups |
+| **Source Code** | **100% Open Source (MIT)** | Closed proprietary | Closed proprietary | Closed proprietary |
 
-### Settings and updates
+---
 
-Open **⋯ → Settings** or press `Ctrl+,`. **General** contains appearance, reading, and update preferences.
-Use **Ask AI** to connect providers and **Storage** to manage saved annotations, conversations, and signatures.
-**About Folio** shows the version, installed/portable edition, and installation location, with a shortcut to open that folder.
+## 🏗️ Architecture
 
-<p>
-  <a href="docs/screenshots/openrouter-setup.png"><img src="docs/screenshots/openrouter-setup.png" width="395" alt="Ask AI settings with OpenRouter selected and a field for an API key"></a>
-  <a href="docs/screenshots/stored-data.png"><img src="docs/screenshots/stored-data.png" width="380" alt="Storage settings with separate controls for clearing saved annotations and Ask AI conversations"></a>
-</p>
+```mermaid
+flowchart TD
+    subgraph UI ["Android App Interface (Capacitor + React 19)"]
+        A["DocumentTabBar & Welcome Screen"]
+        B["PDF Viewer Canvas (pdfjs-dist / pdfium)"]
+        C["Tools Hub (Merge, Split, Compress, Convert)"]
+        D["Signature Dialog (Touch Draw / Camera Photo)"]
+    end
 
-- **Automatic updates on or off:** the preference survives restarts. Turning it off stops background checks/downloads
-  and automatic installation; manual **Check for updates** remains available for self-updating editions.
-- **Installed Windows:** updates download in the background and install silently on exit, or when you choose
-  **Restart and update**, without repeating the Setup wizard.
-- **Linux AppImage:** downloads updates and replaces the AppImage. **Linux .deb:** updates through the signed apt
-  repository and your system updater; Folio's toggle does not disable apt updates.
-- **macOS:** current unsigned builds notify you and offer the download; self-installing updates require a signed
-  build. **Windows portable:** download a replacement manually.
-- **Visible update status:** checking, download progress, update-ready prompts, and errors are shown in the app.
+    subgraph Core ["Local Processing Engine (100% Client-Side WebAssembly)"]
+        E["pdf-lib (Document Manipulation & Assembly)"]
+        F["Tesseract.js WebAssembly Worker"]
+        G["Bundled Models (eng, ben, ara .traineddata.gz)"]
+        H["Mammoth.js (DOCX Text Extraction)"]
+        I["JSZip (Lossless Page Archive Compression)"]
+    end
 
-### Keyboard shortcuts
+    subgraph NativeBridge ["Native Android Layer (Capacitor 8)"]
+        J["MainActivity (WindowInsetsCompat Edge-to-Edge)"]
+        K["AndroidBackBridge (Hardware Back Navigation)"]
+        L["Capacitor Filesystem & Share Sheet Bridge"]
+        M["Android FileProvider & ACTION_VIEW Intent Filters"]
+    end
 
-On macOS, use `⌘` wherever this table says `Ctrl`. Press `?` with a document open for in-app help.
-
-| Action | Shortcut |
-| --- | --- |
-| Open a PDF / open a URL | `Ctrl+O` / `Ctrl+Shift+O` |
-| New tab / close tab | `Ctrl+T` / `Ctrl+W` |
-| Next tab / previous tab (Control on all platforms) | `Control+Tab` / `Control+Shift+Tab` |
-| Find / next match / previous match | `Ctrl+F` / `Enter` / `Shift+Enter` |
-| Back / forward through links | `Alt+←` / `Alt+→` (`⌥←` / `⌥→` on macOS) |
-| Highlight selection or enter Highlight mode / write a note | `H` / `N` |
-| Remove a clicked highlight | `Delete` |
-| Select / draw / add text | `V` / `D` / `T` |
-| Undo / redo annotation edits | `Ctrl+Z` / `Ctrl+Shift+Z` or `Ctrl+Y` |
-| Save a copy / print | `Ctrl+S` / `Ctrl+P` |
-| Zoom in / zoom out / reset zoom | `Ctrl++` / `Ctrl+-` / `Ctrl+0` |
-| Toggle sidebar | `Ctrl+\` |
-| Rotate / toggle two-page view | `R` / `2` |
-| In Organize pages: delete the selected pages | `Delete` or `Backspace` |
-| In Organize pages: undo / redo | `Ctrl+Z` / `Ctrl+Shift+Z` or `Ctrl+Y` |
-| First page / last page | `Home` / `End` |
-| Focus mode / leave focus or current tool | `F` / `Esc` |
-| Settings / keyboard help | `Ctrl+,` / `?` |
-
-### Current limits
-
-- Automatic OCR reads scanned pages on your device using the scan languages selected in Settings. Recognized text becomes available for selection,
-  document search and Ask AI. Saving a copy adds a searchable text layer when the file can safely be rewritten.
-  Pages whose text the export font cannot represent stay available for recognition when reopened.
-- Ask AI uses extracted text, not page images, and includes up to about 400,000 characters of document text. Long
-  documents may be truncated; AI answers can be wrong, so check the cited pages.
-- Folio opens PDFs up to 300 MiB and 10,000 pages. Webpage conversion uses a separate session, so pages behind a
-  login may not load. Desktop URL imports need a direct connection or an HTTP(S) system proxy that accepts
-  numeric-address tunnels. Local-network access requires approval for the requested origin.
-- On upgrading from 1.10.8 or earlier, Recent keeps the stored PDFs and rebuilds their previews when opened.
-  Notes and chat on files up to 2 MiB keep their existing content identity. Larger files had only a partial hash,
-  so Folio keeps those legacy records on disk without attaching them to a potentially different document.
-- Automatic local saving is not cloud sync or a replacement for exporting a PDF copy. Password-protected documents
-  are not saved in Folio between sessions.
-
-## Using Ask AI
-
-Open **Ask AI** with the sparkle button in the toolbar, or select text and choose **Ask AI** in the pop-up toolbar.
-Then pick a provider at the top of the panel:
-
-- **ChatGPT:** click **Continue with ChatGPT** and sign in in your browser. Questions use your ChatGPT plan (Go, Plus,
-  or Pro), and usage counts toward that plan's limits; manage it in
-  [ChatGPT settings](https://chatgpt.com/settings/usage). Sign out, or change the default provider, in Folio's **Settings**.
-- **Claude:** install [Claude Code](https://claude.com/claude-code), run `claude` once in a terminal, and sign in with
-  your Claude account (Pro or Max). Then click **Check again** in Folio. Questions use your Claude subscription.
-- **OpenRouter:** under **Settings → Ask AI**, choose OpenRouter and verify your [OpenRouter API key](https://openrouter.ai/settings/keys).
-  Search the text models or enter a model ID. OpenRouter bills your key. Reopen this section to check the connection,
-  replace the key, or remove it. If a model's context is too small for a document, choose a larger model or ask about
-  a selected passage. For passage questions Folio sends the selected passage, page number, filename and conversation.
-- **Custom endpoint:** under **Settings → Ask AI**, choose Custom endpoint and enter the base URL of any server that
-  accepts OpenAI-style Chat Completions (for example `https://api.example.com/v1`, or `http://localhost:11434/v1` for
-  Ollama), plus its API key if it needs one. Then pick a model from the server's list or enter a model ID. The address
-  must use `https://`, except for this computer or your local network. Folio asks before it connects to an address there,
-  and later requests reach only the local addresses you approved. A plain `http://` address is never used to send to the
-  internet, even if its name later points there. That server's own terms and billing apply.
-
-Ask AI is available in the desktop app only, not the browser version.
-
-## Privacy
-
-Folio requires no Folio account, has no analytics or telemetry, and never uploads your documents on its own. It makes
-network requests only to:
-
-- check GitHub for updates (installed copies; can be turned off in **Settings**),
-- download the scan language packs you choose in **Settings** from the Tesseract.js project on GitHub,
-- verify an OpenRouter key or retrieve model names during OpenRouter setup,
-- check a custom endpoint and retrieve its model names when you connect it in **Settings**,
-- open a link you give it (a webpage is loaded in a hidden, sandboxed window with its own temporary session, so no
-  cookies or sign-ins are shared, and every permission is denied; its scripts run while it loads, as in any browser,
-  and it's then printed to PDF), and
-- answer a question you ask in **Ask AI**. Only then, the document's text (up to about 400,000 characters), any passage
-  you selected, and the conversation go to the provider you chose: OpenAI for ChatGPT, or Anthropic through your
-  installed Claude Code, OpenRouter and the provider serving your chosen OpenRouter model, or the custom endpoint you
-  entered. Their privacy terms apply to that data.
-
-Folio stores an OpenRouter key or a custom endpoint's key only with operating-system credential protection. If secure storage is unavailable,
-enable or unlock your system key store to connect. For ChatGPT, Folio stores its sign-in tokens in its data folder (below, under `ai`), encrypted with the system's
-credential protection (Windows data protection, the macOS Keychain, or the Linux secret store; if a Linux desktop has
-no secret store, you sign in again each time Folio starts), and never exposes them to the page. For Claude, Folio runs your own Claude Code with every tool disabled;
-it never sees or stores your Claude credentials. The question's context is written to a temporary file for Claude Code
-and deleted as soon as the answer finishes. Each document's Ask AI conversation is saved with it on this computer (except for password-protected documents) and
-is there when you reopen the document; the **+** button in the panel starts over and deletes it.
-
-Stored locally in your user profile (`%APPDATA%\Folio` on Windows, `~/Library/Application Support/Folio` on macOS,
-`~/.config/Folio` on Linux): recently opened PDFs and their thumbnails (up to 8,
-removable from the home screen with **Clear all**; password-protected PDFs are never kept), highlights, notes, and
-Ask AI conversations for each document (except password-protected ones), reading positions, preferences, and, only if you choose to remember
-it, your signature image. Apart from provider credentials, this data isn't encrypted, so anyone with access to your
-user account can read it.
-
-## Building from source
-
-Requires [Node.js](https://nodejs.org/) 22 or newer.
-
-```sh
-npm install
-npm run app        # build and run the desktop app
-npm run smoke      # end-to-end check: launches the built app and exercises the basics
-npm run dev        # browser version with hot reload at http://localhost:5173
-
-npm run dist:win   # on Windows: release/Folio-Setup.exe and release/Folio-Portable.exe
-npm run dist:mac   # on macOS: release/Folio-mac.dmg (universal: Apple Silicon and Intel)
-npm run dist:linux # on Linux: release/Folio-linux-x86_64.AppImage and release/Folio-linux-amd64.deb
+    A <--> B
+    A <--> C
+    B <--> D
+    C <--> E
+    C <--> H
+    C <--> I
+    B <--> E
+    B <--> F
+    F <--> G
+    UI <--> NativeBridge
+    NativeBridge <--> OS["Android Operating System (API 24..37)"]
 ```
 
-Each platform's installers are built on that platform; GitHub Actions builds all three for every release. If your
-terminal has `ELECTRON_RUN_AS_NODE=1` set, unset it first.
+---
 
-### How it's put together
+## 🛠️ Building from Source
 
-- `src/`: the reader UI (React + TypeScript, built with Vite) on top of [pdf.js](https://github.com/mozilla/pdf.js).
-  `markup.ts` saves and restores highlights and notes, `NotesPanel.tsx` and `Selection.tsx` are their UI, and
-  `AiPanel.tsx` is the Ask AI panel.
-- `electron/`: the desktop shell for Windows, macOS, and Linux. `main.cjs` serves the built app from `dist/` over a
-  custom `app://` protocol with a strict Content Security Policy, runs the page sandboxed with context isolation, opens
-  PDFs from the file manager, keeps a single window, downloads links, and handles updates. `webpage.cjs` converts
-  webpages to PDF. `ai.cjs` runs Ask AI (ChatGPT
-  sign-in and requests, OpenRouter and custom endpoint keys and requests, and Claude Code). Stored credentials stay in the main process.
-- `scripts/release.mjs` and `.github/workflows/release-build.yml`: the release pipeline (see
-  [CONTRIBUTING.md](CONTRIBUTING.md#releasing)). `scripts/smoke-test.mjs` is the cross-platform smoke test CI runs.
-  `scripts/screenshots.mjs` retakes the Ask AI, highlights, and search screenshots at the top of this README (`npm run build`, then `node scripts/screenshots.mjs`).
+### Prerequisites
+- **Node.js:** v18.0.0 or higher
+- **Java:** OpenJDK 17 or OpenJDK 21
+- **Android SDK:** Platforms 34/35/36 with build-tools
 
-## Contributing
+### Build Steps
 
-Bug reports and pull requests are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md). To report a security issue
-privately, see [SECURITY.md](SECURITY.md).
+```bash
+# 1. Clone repository
+git clone https://github.com/djsusmith/folio_android.git
+cd folio_android
 
-## License
+# 2. Install dependencies
+npm ci
 
-[MIT](LICENSE). Folio includes third-party software under its own licenses; see
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+# 3. Copy OCR neural models and PDF.js assets
+npm run assets
+
+# 4. Build web production bundle
+npx vite build
+
+# 5. Sync Capacitor Android project
+npx cap sync android
+
+# 6. Build production signed APK
+cd android
+./gradlew assembleRelease
+
+# The output APK will be located at:
+# android/app/build/outputs/apk/release/app-release.apk
+```
+
+---
+
+## 📜 Credits & License
+
+- **Android Port, Offline Tools Hub, Multilingual OCR & Signature Suite:**  
+  Engineered and maintained by **[djsusmith](https://github.com/djsusmith)** ([djsusmith/folio_android](https://github.com/djsusmith/folio_android)).
+- **Upstream Desktop Project:**  
+  Based on [Folio](https://github.com/Forward-Future/folio) by Forward-Future, licensed under the **[MIT License](LICENSE.txt)**.
+- **Third-Party Open Source Libraries:**  
+  - [pdfjs-dist](https://github.com/mozilla/pdf.js) & [pdf-lib](https://github.com/Hopding/pdf-lib) (PDF parsing, editing & rendering)
+  - [Tesseract.js](https://github.com/naptha/tesseract.js) (Offline neural optical character recognition)
+  - [Capacitor](https://capacitorjs.com) (Native Android runtime bridge)
+  - [Mammoth](https://github.com/mwilliamson/mammoth.js) (Word document conversion)
+  - [JSZip](https://stuk.github.io/jszip/) (Client-side ZIP archive creation)
+
+---
+
+<p align="center">
+  <sub>Built with ❤️ for privacy, speed, and freedom on Android.</sub>
+</p>
